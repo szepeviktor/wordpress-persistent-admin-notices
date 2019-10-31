@@ -10,5 +10,5 @@ new PersistentNotices();
 PersistentNotices::add('slug', 'Something needs your attention!');
 
 // Delete notice.
-PersistentNotices::add('slug');
+PersistentNotices::remove('slug');
 ```

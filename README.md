@@ -20,7 +20,7 @@ PersistentNotices::add(
     'slug',
     'Something very special needs your attention!',
     [
-        'expiration' => self::PERSISTENT, // Expiration in seconds.
+        'expiration' => PersistentNotices::PERSISTENT, // Expiration in seconds or PersistentNotices::ONCE
         'type'       => 'info',           // Notice type: info, succes, warning, error.
         'capability' => 'manage_options', // WordPress capability to receive notifications.
         'priority'   => 10,               // Used to order notices.

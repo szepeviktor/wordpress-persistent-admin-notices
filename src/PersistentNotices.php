@@ -14,6 +14,13 @@ class PersistentNotices
     public const PERSISTENT = 0;
 
     /**
+     * Remove notice after showing it.
+     *
+     * @var int
+     */
+    public const ONCE = -1;
+
+    /**
      * Transient prefix.
      *
      * @var string
@@ -99,11 +106,16 @@ class PersistentNotices
         }
         $priorities = \array_column($list, 'priority');
         $names = \array_column($list, 'name');
+        $onces = \array_column($list, 'once');
         // Sort by priority.
-        \array_multisort($priorities, SORT_ASC, SORT_NUMERIC, $names);
+        \array_multisort($priorities, SORT_ASC, SORT_NUMERIC, $names, $onces);
 
-        \array_walk($names, function ($name) {
+        \array_walk($names, function ($name, $index) use ($onces) {
             print \get_site_transient(self::PREFIX . $name);
+            // One-off notices.
+            if ($onces[$index]) {
+                self::removeFromNoticeList($name);
+            }
         });
     }
 
@@ -128,10 +140,13 @@ class PersistentNotices
         if (false === $list) {
             $list = [];
         }
-        $list[] = ['name' => $name, 'priority' => $priority];
+        // One-off notices.
+        $once = ($expiration === self::ONCE);
+
+        $list[] = ['name' => $name, 'priority' => $priority, 'once' => $once];
 
         // Save the notice.
-        \set_site_transient(self::PREFIX . $name, $html, $expiration);
+        \set_site_transient(self::PREFIX . $name, $html, $once ? self::PERSISTENT : $expiration);
 
         // Save the notice list.
         \set_site_transient(self::PREFIX . self::LIST_KEY, \array_unique($list), self::PERSISTENT);

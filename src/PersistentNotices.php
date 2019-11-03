@@ -46,7 +46,7 @@ class PersistentNotices
     {
         $defaultArgs = [
             'expiration' => self::PERSISTENT,
-            'type' => 'success',
+            'type' => 'info',
             'capability' => 'manage_options',
             'priority' => 10,
             'classes' => '',
@@ -100,7 +100,7 @@ class PersistentNotices
         $priorities = \array_column($list, 'priority');
         $names = \array_column($list, 'name');
         // Sort by priority.
-        \array_multisort($priorities, $names);
+        \array_multisort($priorities, SORT_ASC, SORT_NUMERIC, $names);
 
         \array_walk($names, function ($name) {
             print \get_transient(self::PREFIX . $name);

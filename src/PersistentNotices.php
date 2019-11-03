@@ -93,7 +93,7 @@ class PersistentNotices
      */
     public function show(): void
     {
-        $list = \get_transient(self::PREFIX . self::LIST_KEY);
+        $list = \get_site_transient(self::PREFIX . self::LIST_KEY);
         if (false === $list) {
             return;
         }
@@ -103,7 +103,7 @@ class PersistentNotices
         \array_multisort($priorities, SORT_ASC, SORT_NUMERIC, $names);
 
         \array_walk($names, function ($name) {
-            print \get_transient(self::PREFIX . $name);
+            print \get_site_transient(self::PREFIX . $name);
         });
     }
 
@@ -124,22 +124,22 @@ class PersistentNotices
 
     protected static function addToNoticeList(string $name, string $html, int $expiration, int $priority): void
     {
-        $list = \get_transient(self::PREFIX . self::LIST_KEY);
+        $list = \get_site_transient(self::PREFIX . self::LIST_KEY);
         if (false === $list) {
             $list = [];
         }
         $list[] = ['name' => $name, 'priority' => $priority];
 
         // Save the notice.
-        \set_transient(self::PREFIX . $name, $html, $expiration);
+        \set_site_transient(self::PREFIX . $name, $html, $expiration);
 
         // Save the notice list.
-        \set_transient(self::PREFIX . self::LIST_KEY, \array_unique($list), self::PERSISTENT);
+        \set_site_transient(self::PREFIX . self::LIST_KEY, \array_unique($list), self::PERSISTENT);
     }
 
     protected static function removeFromNoticeList(string $name): void
     {
-        $list = \get_transient(self::PREFIX . self::LIST_KEY);
+        $list = \get_site_transient(self::PREFIX . self::LIST_KEY);
         if (false === $list) {
             return;
         }
@@ -153,9 +153,9 @@ class PersistentNotices
         unset($list[$index]);
 
         // Save the notice list.
-        \set_transient(self::PREFIX . self::LIST_KEY, $list, self::PERSISTENT);
+        \set_site_transient(self::PREFIX . self::LIST_KEY, $list, self::PERSISTENT);
 
         // Delete the notice.
-        \delete_transient(self::PREFIX . $name);
+        \delete_site_transient(self::PREFIX . $name);
     }
 }

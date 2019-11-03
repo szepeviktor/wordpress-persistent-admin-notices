@@ -36,7 +36,7 @@ class PersistentNotices
 
     public function __construct()
     {
-        if ((\defined('WP_INSTALLING') && true === WP_INSTALLING) || !\is_admin() || \wp_doing_ajax()) {
+        if ((\defined('WP_INSTALLING') && WP_INSTALLING === true) || !\is_admin() || \wp_doing_ajax()) {
             return;
         }
 
@@ -62,7 +62,7 @@ class PersistentNotices
         ];
 
         $name = \sanitize_key($name);
-        if ('' === $name || '' === \trim($message)) {
+        if ($name === '' || \trim($message) === '') {
             // TODO Signal error
             return;
         }
@@ -73,10 +73,10 @@ class PersistentNotices
             return;
         }
 
-        if ('' === $args['classes']) {
+        if ($args['classes'] === '') {
             $args['classes'] = self::getClassesfromType($args['type']);
         }
-        if ('' === $args['noticeHtml']) {
+        if ($args['noticeHtml'] === '') {
             $args['noticeHtml'] = \sprintf(
                 '<div class="%s"><p>%s</p></div>',
                 \esc_attr($args['classes']),
@@ -137,7 +137,7 @@ class PersistentNotices
     public function show(): void
     {
         $list = \get_site_transient(self::PREFIX . self::LIST_KEY);
-        if (false === $list) {
+        if ($list === false) {
             return;
         }
         $priorities = \array_column($list, 'priority');
@@ -147,9 +147,10 @@ class PersistentNotices
         \array_multisort($priorities, SORT_ASC, SORT_NUMERIC, $names, $onces);
 
         \array_walk($names, function ($name, $index) use ($onces) {
-            print \get_site_transient(self::PREFIX . $name);
-            // One-off notices.
-            if ($onces[$index]) {
+            $notice = \get_site_transient(self::PREFIX . $name);
+            print $notice;
+            // One-off and expires notices.
+            if ($onces[$index] || $notice === false) {
                 self::removeFromNoticeList($name);
             }
         });
@@ -173,7 +174,7 @@ class PersistentNotices
     protected static function addToNoticeList(string $name, string $html, int $expiration, int $priority): void
     {
         $list = \get_site_transient(self::PREFIX . self::LIST_KEY);
-        if (false === $list) {
+        if ($list === false) {
             $list = [];
         }
         // One-off notices.
@@ -185,19 +186,19 @@ class PersistentNotices
         \set_site_transient(self::PREFIX . $name, $html, $once ? self::PERSISTENT : $expiration);
 
         // Save the notice list.
-        \set_site_transient(self::PREFIX . self::LIST_KEY, \array_unique($list), self::PERSISTENT);
+        \set_site_transient(self::PREFIX . self::LIST_KEY, \array_unique($list, SORT_REGULAR), self::PERSISTENT);
     }
 
     protected static function removeFromNoticeList(string $name): void
     {
         $list = \get_site_transient(self::PREFIX . self::LIST_KEY);
-        if (false === $list) {
+        if ($list === false) {
             return;
         }
 
         $index = \array_search($name, \array_column($list, 'name'));
         // Not found.
-        if (false === $index) {
+        if ($index === false) {
             return;
         }
 

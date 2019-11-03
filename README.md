@@ -1,7 +1,7 @@
 # Persistent admin notices for WordPress
 
 ```php
-// Use Composer instead!
+// Use Composer instead:  composer require szepeviktor/persistent-admin-notices
 // require __DIR__ . '/vendor/szepeviktor/persistent-admin-notices/src/PersistentNotices.php';
 
 use WordPress\Admin\PersistentNotices;
@@ -11,6 +11,9 @@ new PersistentNotices();
 
 // New notice.
 PersistentNotices::add('slug', 'Something needs your attention!');
+
+// New error notice.
+PersistentNotices::error('slug', 'An error needs to be resolved!');
 
 // Delete notice.
 PersistentNotices::remove('slug');

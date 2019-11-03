@@ -88,6 +88,42 @@ class PersistentNotices
     }
 
     /**
+     * Public API to add an info notice.
+     */
+    public static function info(string $name, string $message, array $args = []): void
+    {
+        // The default type is already 'info'.
+        self::add($name, $message, $args);
+    }
+
+    /**
+     * Public API to add a success notice.
+     */
+    public static function success(string $name, string $message, array $args = []): void
+    {
+        $args = \array_merge($args, ['type' => 'success']);
+        self::add($name, $message, $args);
+    }
+
+    /**
+     * Public API to add a warning notice.
+     */
+    public static function warning(string $name, string $message, array $args = []): void
+    {
+        $args = \array_merge($args, ['type' => 'warning']);
+        self::add($name, $message, $args);
+    }
+
+    /**
+     * Public API to add an error notice.
+     */
+    public static function error(string $name, string $message, array $args = []): void
+    {
+        $args = \array_merge($args, ['type' => 'error']);
+        self::add($name, $message, $args);
+    }
+
+    /**
      * Public API to remove an admin notice.
      */
     public static function remove(string $name): void

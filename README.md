@@ -32,3 +32,16 @@ PersistentNotices::add(
     ]
 );
 ```
+
+### What is the goal here??
+
+When your plugin or theme handles admin notices you have to
+make a calculation or decision and display the notice **every time**.
+
+If you use this package you have to make your calculation only once and
+
+1. Leave the notice there
+1. Or let the notice expire
+1. Or remove it at a later event
+
+Additional benefit is to display notices in WordPress cron jobs and AJAX actions or REST calls.

@@ -14,4 +14,18 @@ PersistentNotices::add('slug', 'Something needs your attention!');
 
 // Delete notice.
 PersistentNotices::remove('slug');
+
+// Customize notice.
+PersistentNotices::add(
+    'slug',
+    'Something very special needs your attention!',
+    [
+        'expiration' => self::PERSISTENT, // Expiration in seconds.
+        'type'       => 'info',           // Notice type: info, succes, warning, error.
+        'capability' => 'manage_options', // WordPress capability to receive notifications.
+        'priority'   => 10,               // Used to order notices.
+        'classes'    => '',               // Override CSS classes.
+        'noticeHtml' => '',               // Override full notice HTML.
+    ]
+);
 ```

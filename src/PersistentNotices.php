@@ -80,6 +80,7 @@ class PersistentNotices
             $args['noticeHtml'] = \sprintf(
                 '<div class="%s"><p>%s</p></div>',
                 \esc_attr($args['classes']),
+                // TODO Allow filtered HTML in $message: wp_kses($message, [a.href, string, em, br])
                 \esc_html($message)
             );
         }

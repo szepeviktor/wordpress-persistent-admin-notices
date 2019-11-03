@@ -45,3 +45,13 @@ If you use this package you have to make your calculation only once and
 1. Or remove it at a later event
 
 Additional benefit is to display notices in WordPress cron jobs and AJAX actions or REST calls.
+
+### Why not ... ?
+
+- Dismissable notices cloud be very easily... dismissed.
+- Notices on specific Admin Pages may be overlooked.
+- Show notices to only one type of user as this package is not a message broker.
+
+### Alternatives
+
+More wordpressy solution: https://github.com/WPTRT/admin-notices

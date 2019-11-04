@@ -46,8 +46,9 @@ class PersistentNotices
     /**
      * Public API to add an admin notice.
      *
-     * For expiration time use PersistentNotices::PERSISTENT, MINUTE_IN_SECONDS, HOUR_IN_SECONDS,
-     * DAY_IN_SECONDS, WEEK_IN_SECONDS, MONTH_IN_SECONDS and YEAR_IN_SECONDS
+     * For expiration time use PersistentNotices::PERSISTENT, PersistentNotices::ONCE,
+     * MINUTE_IN_SECONDS, HOUR_IN_SECONDS, DAY_IN_SECONDS
+     * WEEK_IN_SECONDS, MONTH_IN_SECONDS and YEAR_IN_SECONDS
      */
     public static function add(string $name, string $message, array $args = []): void
     {

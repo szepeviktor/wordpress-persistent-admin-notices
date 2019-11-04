@@ -1,5 +1,17 @@
 # Persistent admin notices for WordPress
 
+This package is for displaying admin notices for site-wide events not for individual user transactions.
+Here are some examples.
+
+- _[WP-Cron] Authentication token for XYZ API has expired._
+- _All Editors! Please finish your articles by 8pm._
+- _We have a new release v3.2.1. See new features at http://example.com/_
+- _CSV import failed. We are out of sync!_
+- _Incomplete ACF options: x, y, z_
+- _All products are out of stock!_
+- _Maximum X limit is reached. Please reduce X!_
+- _John Doe is fired! Please do not contact him anymore._
+
 ```php
 // Use Composer instead:  composer require szepeviktor/persistent-admin-notices
 // require __DIR__ . '/vendor/szepeviktor/persistent-admin-notices/src/PersistentNotices.php';
@@ -50,8 +62,8 @@ Additional benefit is to display notices in WordPress cron jobs and AJAX actions
 
 - Dismissable notices cloud be very easily... dismissed.
 - Notices on specific Admin Pages may be overlooked.
-- Show notices to only one type of user as this package is not a message broker.
+- Showing notices to a Specific User would make this package a messaging system.
 
 ### Alternatives
 
-More wordpressy solution: https://github.com/WPTRT/admin-notices
+More wordpressy and user transaction oriented solution: https://github.com/WPTRT/admin-notices

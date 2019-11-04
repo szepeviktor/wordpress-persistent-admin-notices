@@ -27,6 +27,9 @@ PersistentNotices::add('slug', 'Something needs your attention!');
 // New error notice.
 PersistentNotices::error('slug', 'An error needs to be resolved!');
 
+// Check whether a notice is showing.
+if (PersistentNotices::isActive('slug')) {}
+
 // Delete notice.
 PersistentNotices::remove('slug');
 

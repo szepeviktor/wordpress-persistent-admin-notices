@@ -134,6 +134,14 @@ class PersistentNotices
     }
 
     /**
+     * Public API to detect an admin notice.
+     */
+    public static function isActive(string $name): bool
+    {
+        return self::doesNoticeExist($name);
+    }
+
+    /**
      * Display admin notices in admin_notices hook.
      */
     public function show(): void
@@ -211,5 +219,10 @@ class PersistentNotices
 
         // Delete the notice.
         \delete_site_transient(self::PREFIX . $name);
+    }
+
+    protected static function doesNoticeExist(string $name): bool
+    {
+        return (\get_site_transient(self::PREFIX . $name) !== false);
     }
 }

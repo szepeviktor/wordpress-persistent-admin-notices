@@ -36,7 +36,7 @@ class PersistentNotices
 
     public function __construct()
     {
-        if ((\defined('WP_INSTALLING') && WP_INSTALLING === true) || !\is_admin() || \wp_doing_ajax()) {
+        if ((\defined('WP_INSTALLING') && WP_INSTALLING === true) || ! \is_admin() || \wp_doing_ajax()) {
             return;
         }
 
@@ -70,7 +70,7 @@ class PersistentNotices
         $args = \array_merge($defaultArgs, $args);
 
         // Do not show for users without this capability.
-        if (!\current_user_can($args['capability'])) {
+        if (! \current_user_can($args['capability'])) {
             return;
         }
 
@@ -156,14 +156,17 @@ class PersistentNotices
         // Sort by priority.
         \array_multisort($priorities, SORT_ASC, SORT_NUMERIC, $names, $onces);
 
-        \array_walk($names, function ($name, $index) use ($onces) {
-            $notice = \get_site_transient(self::PREFIX . $name);
-            print $notice;
-            // One-off and expires notices.
-            if ($onces[$index] || $notice === false) {
-                self::removeFromNoticeList($name);
+        \array_walk(
+            $names,
+            function ($name, $index) use ($onces) {
+                $notice = \get_site_transient(self::PREFIX . $name);
+                print $notice;
+                // One-off and expires notices.
+                if ($onces[$index] || $notice === false) {
+                    self::removeFromNoticeList($name);
+                }
             }
-        });
+        );
     }
 
     protected static function getClassesfromType(string $type): string
@@ -190,7 +193,11 @@ class PersistentNotices
         // One-off notices.
         $once = ($expiration === self::ONCE);
 
-        $list[] = ['name' => $name, 'priority' => $priority, 'once' => $once];
+        $list[] = [
+            'name' => $name,
+            'priority' => $priority,
+            'once' => $once,
+        ];
 
         // Save the notice.
         \set_site_transient(self::PREFIX . $name, $html, $once ? self::PERSISTENT : $expiration);
@@ -206,7 +213,7 @@ class PersistentNotices
             return;
         }
 
-        $index = \array_search($name, \array_column($list, 'name'));
+        $index = \array_search($name, \array_column($list, 'name'), true);
         // Not found.
         if ($index === false) {
             return;

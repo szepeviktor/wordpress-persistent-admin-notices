@@ -19,7 +19,10 @@ Here are some examples.
 use WordPress\Admin\PersistentNotices;
 
 // Fire it up!
-new PersistentNotices();
+\add_action('init', function () {
+    new PersistentNotices();
+});
+// Or HookConstructorTo::init(PersistentNotices::class, 0);
 
 // New notice.
 PersistentNotices::add('slug', 'Something needs your attention!');

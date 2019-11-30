@@ -161,7 +161,7 @@ class PersistentNotices
             function ($name, $index) use ($onces) {
                 $notice = \get_site_transient(self::PREFIX . $name);
                 print $notice;
-                // One-off and expires notices.
+                // One-off and expired notices.
                 if ($onces[$index] || $notice === false) {
                     self::removeFromNoticeList($name);
                 }

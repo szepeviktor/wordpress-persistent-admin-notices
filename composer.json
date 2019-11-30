@@ -19,6 +19,10 @@
   },
   "scripts": {
     "style": "phpcs -p --standard=PSR12NeutronRuleset src/",
-    "analyze": "phpstan analyze"
+    "analyze": "phpstan analyze",
+    "test": [
+        "@style",
+        "@analyze"
+    ]
   }
 }

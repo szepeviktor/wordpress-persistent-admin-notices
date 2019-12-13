@@ -70,6 +70,8 @@ Additional benefit is to display notices in WordPress cron jobs and AJAX actions
 - Notices on specific Admin Pages may be overlooked.
 - Showing notices to a Specific User would make this package a messaging system.
 
-### Alternatives
+### Similar projects
 
-More wordpressy and user transaction oriented solution: https://github.com/WPTRT/admin-notices
+- More wordpressy and user transaction oriented solution: https://github.com/WPTRT/admin-notices
+- Tim Jensen's [Organize Admin Notices](https://github.com/timothyjensen/organize-admin-notices)
+- [WP Notify project](https://make.wordpress.org/core/2019/08/05/feature-project-proposal-wp-notify/)
